@@ -1,26 +1,106 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f4f1ea;
+  --foreground: #1c1917;
+  --muted: #6b665e;
+  --surface: rgba(255, 255, 255, 0.84);
+  --border: rgba(214, 211, 209, 0.95);
+  --ring: rgba(13, 148, 136, 0.18);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: "Aptos", "Segoe UI Variable", "Trebuchet MS", sans-serif;
+  --font-mono: "Cascadia Mono", "IBM Plex Mono", "Consolas", monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+
+  html {
+    min-height: 100%;
+  }
+
+  body {
+    min-height: 100vh;
+    color: var(--foreground);
+    background:
+      radial-gradient(circle at top left, rgba(13, 148, 136, 0.14), transparent 28%),
+      radial-gradient(circle at top right, rgba(245, 158, 11, 0.14), transparent 22%),
+      linear-gradient(180deg, #faf8f4 0%, #f4f1ea 48%, #eeebe2 100%);
+    font-family: var(--font-sans);
+  }
+
+  button,
+  input,
+  textarea,
+  select {
+    font: inherit;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  .ui-card {
+    @apply rounded-[28px] border border-white/60 bg-white/85 shadow-[0_20px_60px_-36px_rgba(15,23,42,0.45)] backdrop-blur;
+  }
+
+  .ui-input {
+    @apply w-full rounded-2xl border border-stone-200 bg-white px-4 py-3 text-sm text-stone-900 outline-none transition focus:border-teal-500 focus:ring-4 focus:ring-teal-500/10;
+  }
+
+  .ui-textarea {
+    @apply min-h-28 w-full resize-y rounded-2xl border border-stone-200 bg-white px-4 py-3 text-sm text-stone-900 outline-none transition focus:border-teal-500 focus:ring-4 focus:ring-teal-500/10;
+  }
+
+  .ui-select {
+    @apply w-full appearance-none rounded-2xl border border-stone-200 bg-white px-4 py-3 pr-10 text-sm text-stone-900 outline-none transition focus:border-teal-500 focus:ring-4 focus:ring-teal-500/10;
+  }
+
+  .ui-label {
+    @apply text-sm font-medium text-stone-700;
+  }
+
+  .ui-button-primary {
+    @apply inline-flex items-center justify-center rounded-2xl bg-stone-950 px-4 py-3 text-sm font-semibold text-white transition hover:bg-stone-800 disabled:cursor-not-allowed disabled:opacity-70;
+  }
+
+  .ui-button-secondary {
+    @apply inline-flex items-center justify-center rounded-2xl border border-stone-200 bg-white px-4 py-3 text-sm font-semibold text-stone-700 transition hover:border-stone-300 hover:text-stone-950 disabled:cursor-not-allowed disabled:opacity-70;
+  }
+
+  .ui-button-danger {
+    @apply inline-flex items-center justify-center rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-semibold text-rose-700 transition hover:bg-rose-100 disabled:cursor-not-allowed disabled:opacity-70;
+  }
+}
+
+.task-title-clamp {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+
+.task-description-clamp {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.ui-modal {
+  max-width: none;
+  max-height: none;
+  margin: auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.ui-modal::backdrop {
+  background: rgba(28, 25, 23, 0.38);
+  backdrop-filter: blur(6px);
 }
