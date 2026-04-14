@@ -1,5 +1,5 @@
 import { AppShell } from "@/components/layout/app-shell";
-import { ProjectForm } from "@/components/forms/project-form";
+import { AddProjectModal } from "@/components/projects/add-project-modal";
 import { ProjectCard } from "@/components/projects/project-card";
 import { EmptyState } from "@/components/ui/empty-state";
 import { FeedbackBanner } from "@/components/ui/feedback-banner";
@@ -27,22 +27,13 @@ export default async function ProjectsPage({ searchParams }: ProjectsPageProps) 
         eyebrow="Workspace"
         title="Projects"
         description="Create project buckets for every stream of work, keep their status visible, and open each board when it is time to ship."
+        action={<AddProjectModal redirectTo="/projects" />}
       />
 
       <FeedbackBanner
         notice={resolvedSearchParams.notice}
         noticeType={resolvedSearchParams.noticeType}
       />
-
-      <section className="ui-card p-6">
-        <div className="mb-5">
-          <h2 className="text-xl font-semibold text-stone-950">Create project</h2>
-          <p className="mt-2 text-sm leading-6 text-stone-600">
-            Keep new requests organized from the start by creating a project first.
-          </p>
-        </div>
-        <ProjectForm mode="create" redirectTo="/projects" />
-      </section>
 
       <section className="space-y-4">
         {projects.length > 0 ? (

@@ -12,13 +12,15 @@ export function AuthForm({ mode }: AuthFormProps) {
   const action = isSignIn ? signInAction : signUpAction;
   const title = isSignIn ? "Sign in" : "Sign up";
   const description = isSignIn
-    ? "Masuk untuk lanjut mengelola project dan task."
-    : "Buat akun baru untuk mulai memakai WGN.";
+    ? "Sign in to manage your projects and tasks."
+    : "Create a new account to start using WGN.";
   const submitLabel = isSignIn ? "Sign in" : "Sign up";
   const pendingLabel = isSignIn ? "Signing in..." : "Creating...";
   const passwordAutoComplete = isSignIn ? "current-password" : "new-password";
   const switchHref = isSignIn ? "/login?mode=signup" : "/login?mode=signin";
-  const switchLabel = isSignIn ? "Belum punya akun? Sign up" : "Sudah punya akun? Sign in";
+  const switchLabel = isSignIn
+    ? "Don't have an account? Sign up"
+    : "Already have an account? Sign in";
 
   return (
     <section className="ui-card p-6">
