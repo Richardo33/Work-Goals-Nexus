@@ -4,12 +4,9 @@ import { Suspense, useEffect, useRef } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import Swal from "sweetalert2";
 
-import { cn } from "@/lib/utils";
-
 type FeedbackBannerProps = {
   notice?: string;
   noticeType?: string;
-  variant?: "banner" | "swal";
 };
 
 function FeedbackAlert({
@@ -57,32 +54,14 @@ function FeedbackAlert({
 export function FeedbackBanner({
   notice,
   noticeType = "success",
-  variant = "banner",
 }: FeedbackBannerProps) {
   if (!notice) {
     return null;
   }
 
-  if (variant === "swal") {
-    return (
-      <Suspense fallback={null}>
-        <FeedbackAlert notice={notice} noticeType={noticeType} />
-      </Suspense>
-    );
-  }
-
-  const isError = noticeType === "error";
-
   return (
-    <div
-      className={cn(
-        "rounded-2xl border px-4 py-3 text-sm shadow-sm",
-        isError
-          ? "border-rose-200 bg-rose-50 text-rose-700"
-          : "border-emerald-200 bg-emerald-50 text-emerald-700",
-      )}
-    >
-      {notice}
-    </div>
+    <Suspense fallback={null}>
+      <FeedbackAlert notice={notice} noticeType={noticeType} />
+    </Suspense>
   );
 }

@@ -5,6 +5,7 @@ import { STATUS_BADGE_STYLES, TASK_STATUS_LABELS } from "@/lib/constants";
 import type { Task, TaskStatus } from "@/lib/types";
 
 type KanbanColumnProps = {
+  onEditTask: (taskId: string) => void;
   status: TaskStatus;
   tasks: Task[];
   projectId: string;
@@ -12,6 +13,7 @@ type KanbanColumnProps = {
 };
 
 export function KanbanColumn({
+  onEditTask,
   status,
   tasks,
   projectId,
@@ -32,6 +34,7 @@ export function KanbanColumn({
               task={task}
               projectId={projectId}
               redirectTo={redirectTo}
+              onEditTask={onEditTask}
             />
           ))
         ) : (

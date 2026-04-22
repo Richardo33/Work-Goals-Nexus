@@ -33,7 +33,6 @@ export default async function ProjectsPage({ searchParams }: ProjectsPageProps) 
       <FeedbackBanner
         notice={resolvedSearchParams.notice}
         noticeType={resolvedSearchParams.noticeType}
-        variant="swal"
       />
 
       <section className="space-y-4">

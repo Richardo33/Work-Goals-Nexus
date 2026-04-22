@@ -1,9 +1,9 @@
+"use client";
+
 import {
   deleteTaskAction,
-  updateTaskAction,
   updateTaskStatusAction,
 } from "@/app/actions/tasks";
-import { TaskDescriptionField } from "@/components/forms/task-description-field";
 import { TaskDescriptionPreview } from "@/components/tasks/task-description-preview";
 import { Badge } from "@/components/ui/badge";
 import { SubmitButton } from "@/components/ui/submit-button";
@@ -16,17 +16,18 @@ import {
 import type { Task } from "@/lib/types";
 
 type TaskCardProps = {
+  onEditTask: (taskId: string) => void;
   task: Task;
   projectId: string;
   redirectTo: string;
 };
 
-export function TaskCard({ task, projectId, redirectTo }: TaskCardProps) {
+export function TaskCard({ task, projectId, redirectTo, onEditTask }: TaskCardProps) {
   const nextStatuses = TASK_STATUS_OPTIONS.filter((status) => status !== task.status);
 
   return (
-    <article className="ui-card h-[230px] p-5">
-      <div className="flex h-full flex-col justify-between gap-4">
+    <article className="ui-card min-h-[230px] p-5">
+      <div className="flex flex-col gap-4">
         <div className="flex items-start justify-between gap-4">
           <div className="flex min-w-0 flex-1 flex-col gap-3">
             <div className="flex flex-wrap items-center gap-2">
@@ -76,71 +77,47 @@ export function TaskCard({ task, projectId, redirectTo }: TaskCardProps) {
           </details>
         </div>
 
-        <details className="rounded-2xl border border-stone-200 bg-stone-50">
-          <summary className="cursor-pointer list-none px-4 py-3 text-sm font-medium text-stone-700">
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={() => onEditTask(task.id)}
+            className="flex-1 rounded-2xl border border-stone-200 bg-stone-50 px-4 py-3 text-left text-sm font-medium text-stone-700 transition hover:bg-stone-100"
+          >
             Edit task
-          </summary>
+          </button>
 
-          <div className="space-y-5 border-t border-stone-200 px-4 py-4">
-            <form action={updateTaskAction} className="grid gap-4">
-              <input type="hidden" name="taskId" value={task.id} />
-              <input type="hidden" name="projectId" value={projectId} />
-              <input type="hidden" name="redirectTo" value={redirectTo} />
-
-              <div className="space-y-2">
-                <label htmlFor={`edit-task-title-${task.id}`} className="ui-label">
-                  Task title
-                </label>
-                <input
-                  id={`edit-task-title-${task.id}`}
-                  name="title"
-                  required
-                  maxLength={160}
-                  defaultValue={task.title}
-                  className="ui-input"
-                />
-              </div>
-
-              <TaskDescriptionField
-                  id={`edit-task-description-${task.id}`}
-                  name="description"
-                  defaultValue={task.description ?? ""}
-                  placeholder="Optional description"
-              />
-
-              <div className="space-y-2">
-                <label htmlFor={`edit-task-priority-${task.id}`} className="ui-label">
-                  Priority
-                </label>
-                <select
-                  id={`edit-task-priority-${task.id}`}
-                  name="priority"
-                  defaultValue={task.priority}
-                  className="ui-select"
-                >
-                  <option value="low">Low</option>
-                  <option value="medium">Medium</option>
-                  <option value="high">High</option>
-                </select>
-              </div>
-
-              <input type="hidden" name="status" value={task.status} />
-
-              <SubmitButton className="ui-button-primary" pendingText="Saving...">
-                Save task
-              </SubmitButton>
-            </form>
-
-            <form action={deleteTaskAction}>
-              <input type="hidden" name="taskId" value={task.id} />
-              <input type="hidden" name="projectId" value={projectId} />
-              <input type="hidden" name="redirectTo" value={redirectTo} />
-              <SubmitButton className="ui-button-danger" pendingText="Deleting...">
-                Delete task
-              </SubmitButton>
-            </form>
-          </div>
-        </details>
+          <form action={deleteTaskAction}>
+            <input type="hidden" name="taskId" value={task.id} />
+            <input type="hidden" name="projectId" value={projectId} />
+            <input type="hidden" name="redirectTo" value={redirectTo} />
+            <SubmitButton
+              className="inline-flex h-12 w-12 items-center justify-center rounded-2xl border border-rose-200 bg-rose-50 text-rose-700 transition hover:bg-rose-100"
+              pendingText="..."
+              confirmTitle="Delete this task?"
+              confirmText="This task will be permanently removed from the board."
+              confirmConfirmText="Yes, delete it"
+              aria-label="Delete task"
+              title="Delete task"
+            >
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 24 24"
+                className="h-5 w-5"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.9"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M3 6h18" />
+                <path d="M8 6V4.75A1.75 1.75 0 0 1 9.75 3h4.5A1.75 1.75 0 0 1 16 4.75V6" />
+                <path d="M6.75 6l.7 11.1A2 2 0 0 0 9.44 19h5.12a2 2 0 0 0 1.99-1.9L17.25 6" />
+                <path d="M10 10.25v5.5" />
+                <path d="M14 10.25v5.5" />
+              </svg>
+            </SubmitButton>
+          </form>
+        </div>
       </div>
     </article>
   );

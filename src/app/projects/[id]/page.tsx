@@ -3,7 +3,7 @@ import Link from "next/link";
 import { AppShell } from "@/components/layout/app-shell";
 import { AddTaskModal } from "@/components/tasks/add-task-modal";
 import { ProjectStatusMenu } from "@/components/projects/project-status-menu";
-import { KanbanColumn } from "@/components/tasks/kanban-column";
+import { TaskBoard } from "@/components/tasks/task-board";
 import { Badge } from "@/components/ui/badge";
 import { FeedbackBanner } from "@/components/ui/feedback-banner";
 import { PageHeader } from "@/components/ui/page-header";
@@ -60,10 +60,6 @@ export default async function ProjectDetailPage({
   const palette = PROJECT_BADGE_STYLES[project.badge_color];
   const sortedTasks = sortTasks(tasks);
 
-  const todoTasks = sortedTasks.filter((task) => task.status === "todo");
-  const doingTasks = sortedTasks.filter((task) => task.status === "doing");
-  const doneTasks = sortedTasks.filter((task) => task.status === "done");
-
   return (
     <AppShell currentPath={`/projects/${project.id}`} userEmail={user?.email}>
       <PageHeader
@@ -102,7 +98,6 @@ export default async function ProjectDetailPage({
       <FeedbackBanner
         notice={resolvedSearchParams.notice}
         noticeType={resolvedSearchParams.noticeType}
-        variant="swal"
       />
 
       <section className="ui-card p-6">
@@ -172,26 +167,7 @@ export default async function ProjectDetailPage({
         </form>
       </section>
 
-      <section className="grid gap-6 xl:grid-cols-3">
-        <KanbanColumn
-          status="todo"
-          tasks={todoTasks}
-          projectId={project.id}
-          redirectTo={redirectTo}
-        />
-        <KanbanColumn
-          status="doing"
-          tasks={doingTasks}
-          projectId={project.id}
-          redirectTo={redirectTo}
-        />
-        <KanbanColumn
-          status="done"
-          tasks={doneTasks}
-          projectId={project.id}
-          redirectTo={redirectTo}
-        />
-      </section>
+      <TaskBoard projectId={project.id} redirectTo={redirectTo} tasks={sortedTasks} />
     </AppShell>
   );
 }

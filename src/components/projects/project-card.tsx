@@ -91,7 +91,13 @@ export function ProjectCard({ project, redirectTo }: ProjectCardProps) {
         <form action={deleteProjectAction} className="self-start">
           <input type="hidden" name="projectId" value={project.id} />
           <input type="hidden" name="redirectTo" value="/projects" />
-          <SubmitButton className="ui-button-danger" pendingText="Deleting...">
+          <SubmitButton
+            className="ui-button-danger"
+            pendingText="Deleting..."
+            confirmTitle="Delete this project?"
+            confirmText="This will permanently remove the project and all tasks inside it."
+            confirmConfirmText="Yes, delete it"
+          >
             Delete project
           </SubmitButton>
         </form>

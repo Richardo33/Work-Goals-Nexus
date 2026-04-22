@@ -16,6 +16,8 @@ const navigation = [
 ];
 
 export function AppShell({ children, currentPath, userEmail }: AppShellProps) {
+  const displayName = userEmail?.split("@")[0] || "Your account";
+
   return (
     <div className="min-h-screen bg-transparent">
       <div className="mx-auto flex min-h-screen w-full max-w-7xl flex-col gap-8 px-4 py-6 sm:px-6 lg:px-8">
@@ -63,9 +65,7 @@ export function AppShell({ children, currentPath, userEmail }: AppShellProps) {
                   <p className="text-xs uppercase tracking-[0.18em] text-stone-400">
                     Signed in
                   </p>
-                  <p className="text-sm font-medium text-stone-700">
-                    {userEmail ?? "Your account"}
-                  </p>
+                  <p className="text-sm font-medium text-stone-700">{displayName}</p>
                 </div>
                 <form action={signOutAction}>
                   <SubmitButton className="ui-button-secondary" pendingText="Signing out...">
