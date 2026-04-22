@@ -102,6 +102,7 @@ export default async function ProjectDetailPage({
       <FeedbackBanner
         notice={resolvedSearchParams.notice}
         noticeType={resolvedSearchParams.noticeType}
+        variant="swal"
       />
 
       <section className="ui-card p-6">
