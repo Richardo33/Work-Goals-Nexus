@@ -14,7 +14,10 @@ import { getCurrentUser } from "@/lib/auth";
 import { getDashboardData } from "@/lib/data";
 
 export default async function DashboardPage() {
-  const [user, dashboard] = await Promise.all([getCurrentUser(), getDashboardData()]);
+  const [user, dashboard] = await Promise.all([
+    getCurrentUser(),
+    getDashboardData(),
+  ]);
 
   return (
     <AppShell currentPath="/dashboard" userEmail={user?.email}>
@@ -43,7 +46,9 @@ export default async function DashboardPage() {
 
       <section className="ui-card p-6">
         <div className="mb-6">
-          <h2 className="text-xl font-semibold text-stone-950">Tasks by status</h2>
+          <h2 className="text-xl font-semibold text-stone-950">
+            Tasks by status
+          </h2>
           <p className="mt-2 text-sm leading-6 text-stone-600">
             A quick read on where your workload is stacking up.
           </p>
@@ -71,7 +76,9 @@ export default async function DashboardPage() {
       <section className="ui-card p-6">
         <div className="mb-6 flex items-center justify-between gap-4">
           <div>
-            <h2 className="text-xl font-semibold text-stone-950">Recent projects</h2>
+            <h2 className="text-xl font-semibold text-stone-950">
+              Recent projects
+            </h2>
             <p className="mt-2 text-sm leading-6 text-stone-600">
               Jump back into the projects you touched most recently.
             </p>
@@ -90,11 +97,13 @@ export default async function DashboardPage() {
                 <Link
                   key={project.id}
                   href={`/projects/${project.id}`}
-                  className="block rounded-[28px] border border-stone-200 bg-gradient-to-br from-white via-white to-stone-50 p-5 transition hover:-translate-y-0.5 hover:shadow-[0_24px_50px_-35px_rgba(15,23,42,0.4)]"
+                  className="block rounded-[28px] border border-stone-200 bg-linear-to-br from-white via-white to-stone-50 p-5 transition hover:-translate-y-0.5 hover:shadow-[0_24px_50px_-35px_rgba(15,23,42,0.4)]"
                 >
                   <div className="flex flex-wrap items-center gap-2">
                     <Badge className={palette.badge}>
-                      <span className={`mr-2 h-2.5 w-2.5 rounded-full ${palette.dot}`} />
+                      <span
+                        className={`mr-2 h-2.5 w-2.5 rounded-full ${palette.dot}`}
+                      />
                       {project.name}
                     </Badge>
                     <Badge className={STATUS_BADGE_STYLES[project.status]}>

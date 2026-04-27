@@ -7,6 +7,11 @@ export const metadata: Metadata = {
     template: "%s | WGN",
   },
   description: "Work Goals Nexus for focused project-based task management.",
+  icons: {
+    icon: "/logo.png",
+    apple: "/logo.png",
+    shortcut: "/logo.png",
+  },
 };
 
 export default function RootLayout({
