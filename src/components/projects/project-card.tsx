@@ -83,24 +83,24 @@ export function ProjectCard({ project, redirectTo }: ProjectCardProps) {
           <summary className="cursor-pointer list-none px-4 py-3 text-sm font-medium text-stone-700">
             Edit project
           </summary>
-          <div className="border-t border-stone-200 px-4 py-4">
+          <div className="space-y-4 border-t border-stone-200 px-4 py-4">
             <ProjectForm mode="edit" project={project} redirectTo={redirectTo} />
+
+            <form action={deleteProjectAction} className="self-start">
+              <input type="hidden" name="projectId" value={project.id} />
+              <input type="hidden" name="redirectTo" value="/projects" />
+              <SubmitButton
+                className="ui-button-danger"
+                pendingText="Deleting..."
+                confirmTitle="Delete this project?"
+                confirmText="This will permanently remove the project and all tasks inside it."
+                confirmConfirmText="Yes, delete it"
+              >
+                Delete project
+              </SubmitButton>
+            </form>
           </div>
         </details>
-
-        <form action={deleteProjectAction} className="self-start">
-          <input type="hidden" name="projectId" value={project.id} />
-          <input type="hidden" name="redirectTo" value="/projects" />
-          <SubmitButton
-            className="ui-button-danger"
-            pendingText="Deleting..."
-            confirmTitle="Delete this project?"
-            confirmText="This will permanently remove the project and all tasks inside it."
-            confirmConfirmText="Yes, delete it"
-          >
-            Delete project
-          </SubmitButton>
-        </form>
       </div>
     </article>
   );
